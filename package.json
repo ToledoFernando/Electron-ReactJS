@@ -1,0 +1,27 @@
+{
+  "name": "reproductor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "cls && electron .",
+    "build": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.toledoDev.reproductor",
+    "productName": "Reproductor",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "**/*"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^22.1.0",
+    "electron-builder": "^23.6.0"
+  }
+}
