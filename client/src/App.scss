@@ -1,0 +1,52 @@
+.app {
+  background-color: #0607069e;
+  backdrop-filter: blur(5px);
+  //   filter: blur(5px);
+  span {
+    position: absolute;
+    border-radius: 40%;
+    filter: blur(50px);
+    z-index: -1;
+
+    &:nth-child(1) {
+      background-color: #c92b2b9a;
+      width: 30%;
+      height: 40%;
+      top: 0;
+      left: 20%;
+    }
+    &:nth-child(2) {
+      background-color: #161f5ec3;
+      width: 40%;
+      height: 30%;
+      bottom: 10%;
+      right: 10%;
+    }
+
+    &:nth-child(3) {
+      background-color: #2b7218;
+      width: 10%;
+      height: 10%;
+      bottom: 0;
+      left: 20%;
+    }
+    &:nth-child(4) {
+      background-color: #721867;
+      width: 20%;
+      height: 20%;
+      top: 10%;
+      right: 20%;
+    }
+  }
+  #gradient-canvas {
+    position: fixed;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    --gradient-color-1: #161356;
+    --gradient-color-2: #590e05;
+    --gradient-color-3: #37153c;
+    --gradient-color-4: #1c1e1c;
+  }
+}

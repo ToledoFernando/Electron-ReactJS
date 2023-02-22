@@ -1,0 +1,23 @@
+.navbar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  height: 50px;
+  background-color: #00000098;
+  backdrop-filter: blur(3px);
+  ul {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: space-around;
+
+    li {
+      list-style: none;
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+  }
+}

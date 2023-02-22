@@ -1,0 +1,82 @@
+.biblioteca {
+  //   background-color: var(--bg-1);
+  width: 95%;
+  margin: auto;
+  height: 100vh;
+  padding-top: 10px;
+  .b {
+    width: 100%;
+  }
+
+  .ruta {
+    color: #b8b7b7;
+    font-size: 15px;
+    background-color: #d6d2d216;
+    padding: 5px 10px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+
+  .carpetas {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0px;
+    width: 100%;
+    overflow-x: auto;
+
+    button {
+      cursor: pointer;
+      background-color: #5e5c5c73;
+      color: #d6d2d2e4;
+      padding: 5px 10px;
+      font-size: 16px;
+      border: 0;
+      border-radius: 4px;
+    }
+  }
+
+  .mm {
+    display: flex;
+    gap: 2%;
+
+    .musicas {
+      height: 73vh;
+      padding: 5px 0;
+      width: 40%;
+      overflow: auto;
+      gap: 10px;
+      display: flex;
+      flex-direction: column;
+
+      &::-webkit-scrollbar {
+        -webkit-appearance: none;
+      }
+      &::-webkit-scrollbar {
+        background-color: transparent;
+      }
+      &::-webkit-scrollbar:vertical {
+        width: 3px;
+      }
+      &::-webkit-scrollbar:horizontal {
+        width: 0;
+        height: 0;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #5d5d5d;
+        border-radius: 20px;
+        border: 0;
+      }
+
+      &::-webkit-scrollbar-track {
+        border-radius: 10px;
+      }
+
+      &:hover {
+        &::-webkit-scrollbar:vertical {
+          width: 4px;
+        }
+      }
+    }
+  }
+}

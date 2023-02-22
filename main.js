@@ -16,9 +16,9 @@ const createWindow = () => {
   win.loadURL("http://localhost:5173");
 };
 
-ipcMain.handle("musicFolder", async (event) => {
+ipcMain.handle("musicFolder", async (event, url) => {
   const music = await fs.readdirSync(
-    `C:\\Users\\${process.env.USERNAME}\\Music`,
+    `C:\\Users\\${process.env.USERNAME}\\Music\\${url}`,
     "utf-8"
   );
   const result = music.map((m) => {
@@ -31,12 +31,15 @@ ipcMain.handle("musicFolder", async (event) => {
 });
 
 ipcMain.handle("get-music-file-url", (event, ruta) => {
-  const filePath = path.join(`C:\\Users\\${process.env.USERNAME}\\Music`, ruta);
-  const data = url.format({
-    protocol: "file",
-    slashes: true,
-    pathname: filePath,
-  });
-  return data;
+  // const filePath = path.join(`C:\\Users\\${process.env.USERNAME}\\Music`, ruta);
+  // console.log(ruta);
+
+  const xd = fs.readFileSync(
+    path.join(`C:\\Users\\${process.env.USERNAME}\\Music`, ruta)
+  );
+
+  const base64Data = Buffer.from(xd).toString("base64");
+
+  return base64Data;
 });
 app.whenReady().then(() => createWindow());

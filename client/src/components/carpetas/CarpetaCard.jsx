@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
+function CarpetaCard({ data, set, ruta, music }) {
+  const handleChange = () => {
+    set(true);
+    ruta.push(data.name);
+    music(ruta.join("\\"));
+  };
 
-function CarpetaCard({ data }) {
   return (
     <div>
-      <Link to={data.name}>{data.name}</Link>
+      <button onClick={handleChange}>{data.name}</button>
     </div>
   );
 }
