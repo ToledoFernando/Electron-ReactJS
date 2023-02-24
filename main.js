@@ -1,10 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs");
-const url = require("url");
 
 const createWindow = () => {
   const win = new BrowserWindow({
+    width: 800,
+    height: 600,
     resizable: false,
     maximizable: false,
     webPreferences: {
