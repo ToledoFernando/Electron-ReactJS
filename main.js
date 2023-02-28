@@ -18,29 +18,36 @@ const createWindow = () => {
 };
 
 ipcMain.handle("musicFolder", async (event, url) => {
-  const music = await fs.readdirSync(
-    `C:\\Users\\${process.env.USERNAME}\\Music\\${url}`,
-    "utf-8"
+  const directory = `C:\\Users\\${process.env.USERNAME}\\Music\\${url || ""}`;
+  const data = fs.readdirSync(`${directory}`);
+
+  let mp3File = [];
+  let folders = [];
+
+  await Promise.all(
+    data.map(async (file) => {
+      try {
+        const data = await fs.promises.stat(path.join(directory, file));
+        if (data.isDirectory()) {
+          folders.push({ name: file });
+        } else if (path.extname(`${directory}\\${file}`) === ".mp3") {
+          mp3File.push({ name: file });
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    })
   );
-  const result = music.map((m) => {
-    return {
-      name: m,
-      ruta: `C:\\Users\\${process.env.USERNAME}\\Music\\${m}`,
-    };
-  });
-  return result;
+
+  for (let a = 0; a < mp3File.length; a++) {
+    const buff = fs.readFileSync(path.join(directory, mp3File[a].name));
+    mp3File[a].buff = buff;
+  }
+
+  return { mp3File, folders };
 });
 
 ipcMain.handle("get-music-file-url", (event, ruta) => {
-  // const filePath = path.join(`C:\\Users\\${process.env.USERNAME}\\Music`, ruta);
-  // console.log(ruta);
-
-  const xd = fs.readFileSync(
-    path.join(`C:\\Users\\${process.env.USERNAME}\\Music`, ruta)
-  );
-
-  const base64Data = Buffer.from(xd).toString("base64");
-
-  return base64Data;
+  return "Musica Base 64";
 });
 app.whenReady().then(() => createWindow());
