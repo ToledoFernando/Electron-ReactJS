@@ -18,7 +18,16 @@ const createWindow = () => {
 };
 
 ipcMain.handle("musicFolder", async (event, url) => {
-  const directory = `C:\\Users\\${process.env.USERNAME}\\Music\\${url || ""}`;
+  let directory;
+  if (url) {
+    let ruta = "\\";
+    url?.forEach((element) => {
+      ruta += `${element}\\`;
+    });
+    directory = `C:\\Users\\${process.env.USERNAME}\\Music\\${ruta}`;
+  } else {
+    directory = `C:\\Users\\${process.env.USERNAME}\\Music\\`;
+  }
   const data = fs.readdirSync(`${directory}`);
 
   let mp3File = [];

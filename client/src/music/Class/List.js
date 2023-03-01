@@ -14,12 +14,13 @@ export class List {
   }
 
   push(value) {
+    value.id = this.length + 1;
     const nodo = new Nodo(value);
     if (!this.head) {
       this.head = nodo;
       return this.length++;
     }
-    this._push(this.head, value);
+    this._push(this.head, nodo);
   }
 
   _push(current, value) {
