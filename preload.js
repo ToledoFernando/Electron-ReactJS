@@ -5,8 +5,20 @@ contextBridge.exposeInMainWorld("musicFolder", async (ruta) => {
   return music;
 });
 
-contextBridge.exposeInMainWorld("music", async (archivo) => {
-  const musicBase64 = await ipcRenderer.invoke("get-music-file-url", archivo);
+contextBridge.exposeInMainWorld("getMusicInfo", async (url) => {
+  const data = await ipcRenderer.invoke("getMusicInfo", url);
+  return data;
+});
 
-  return musicBase64;
+contextBridge.exposeInMainWorld("downloadVideoURL", async (url) => {
+  const info = await ipcRenderer.invoke("downloadVideoURL", url);
+  return info;
+});
+
+contextBridge.exposeInMainWorld("send", (event, msg) => {
+  return ipcRenderer.send(event, msg);
+});
+
+contextBridge.exposeInMainWorld("received", (event, callback) => {
+  return ipcRenderer.on(event, callback);
 });

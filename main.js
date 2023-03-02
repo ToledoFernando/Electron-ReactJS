@@ -1,6 +1,12 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, Notification } = require("electron");
 const path = require("path");
 const fs = require("fs");
+const {
+  musicFolder,
+  getInfoMusic,
+  downloadVideoURL,
+  downloadMusicUrl,
+} = require("./event");
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -17,46 +23,23 @@ const createWindow = () => {
   win.loadURL("http://localhost:5173");
 };
 
-ipcMain.handle("musicFolder", async (event, url) => {
-  let directory;
-  if (url) {
-    let ruta = "\\";
-    url?.forEach((element) => {
-      ruta += `${element}\\`;
-    });
-    directory = `C:\\Users\\${process.env.USERNAME}\\Music\\${ruta}`;
-  } else {
-    directory = `C:\\Users\\${process.env.USERNAME}\\Music\\`;
-  }
-  const data = fs.readdirSync(`${directory}`);
+musicFolder();
+getInfoMusic();
 
-  let mp3File = [];
-  let folders = [];
-
-  await Promise.all(
-    data.map(async (file) => {
-      try {
-        const data = await fs.promises.stat(path.join(directory, file));
-        if (data.isDirectory()) {
-          folders.push({ name: file });
-        } else if (path.extname(`${directory}\\${file}`) === ".mp3") {
-          mp3File.push({ name: file });
-        }
-      } catch (err) {
-        console.log(err.message);
-      }
-    })
-  );
-
-  for (let a = 0; a < mp3File.length; a++) {
-    const buff = fs.readFileSync(path.join(directory, mp3File[a].name));
-    mp3File[a].buff = buff;
-  }
-
-  return { mp3File, folders };
+ipcMain.on("downloadVideo", (event, msg) => {
+  new Notification({
+    title: "Descargando Video",
+    body: msg.title,
+  }).show();
+  downloadVideoURL(msg);
 });
 
-ipcMain.handle("get-music-file-url", (event, ruta) => {
-  return "Musica Base 64";
+ipcMain.on("downloadMusic", (event, msg) => {
+  new Notification({
+    title: "Descargando Musica",
+    body: msg.title,
+  }).show();
+  downloadMusicUrl(msg);
 });
+
 app.whenReady().then(() => createWindow());

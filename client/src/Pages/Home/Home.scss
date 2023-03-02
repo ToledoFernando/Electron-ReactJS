@@ -1,5 +1,4 @@
 .Home {
-  background-color: #171923;
   height: 100vh;
   width: 100%;
   display: flex;
@@ -8,7 +7,7 @@
     width: 100%;
 
     .ruta {
-      background-color: #1e232b;
+      background-color: var(--bg-2);
       color: #ddd;
       padding: 3px 10px;
       width: 90%;
@@ -19,12 +18,24 @@
     .folders {
       width: 92.3%;
       margin: 8px auto;
+      display: flex;
+      justify-content: space-between;
+
+      .download {
+        background-color: var(--red);
+        border: 0;
+        border-radius: 4px;
+        padding: 3px 7px;
+        color: #ddd;
+        cursor: pointer;
+      }
+
       div {
         display: flex;
         gap: 10px;
 
         button {
-          background-color: #1e232b;
+          background-color: var(--bg-2);
           color: #fff;
           border: 0;
           cursor: pointer;
@@ -33,7 +44,7 @@
           font-size: 13px;
 
           &:hover {
-            background-color: rgb(39, 45, 54);
+            background-color: var(--bg-3);
           }
         }
       }
