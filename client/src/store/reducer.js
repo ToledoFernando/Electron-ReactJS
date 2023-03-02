@@ -25,7 +25,6 @@ export function rootReducer(state = initialState, action) {
         act: action.payload,
         sig: action.payload.next,
       };
-
     default:
       return {
         ...state,
