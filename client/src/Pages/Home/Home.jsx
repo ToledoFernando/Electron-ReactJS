@@ -22,10 +22,6 @@ function Home() {
     return ruta;
   };
 
-  const pageDownload = () => {
-    document.documentElement.scrollTop = 550;
-  };
-
   useEffect(() => {
     dispatch(getMusicFolder()).then(() => {
       setLoad(false);
@@ -41,8 +37,8 @@ function Home() {
             <div className="ruta">{url.length > 0 ? rutaM() : "\\"}</div>
             <div className="folders">
               <Folder set={setURL} url={url} />
-              <button onClick={pageDownload} className="download">
-                Descargar Musica
+              <button className="download">
+                <a href="#DownloadPage">Descargar Musica</a>
               </button>
             </div>
             {!musics.head ? null : (

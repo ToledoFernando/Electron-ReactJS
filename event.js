@@ -48,7 +48,6 @@ function musicFolder() {
 
 function getInfoMusic() {
   ipcMain.handle("getMusicInfo", async (event, ruta) => {
-    console.log("BUSCANDO");
     const data = await ytdl.getInfo(ruta);
     let response = { title: data.player_response.videoDetails.title };
     for (let a = 0; a < data.formats.length; a++) {
@@ -64,43 +63,42 @@ function getInfoMusic() {
   });
 }
 
-function downloadVideoURL(ruta) {
-  const file = fs.createWriteStream(
-    `C:\\Users\\${process.env.USERNAME}\\Video\\${ruta.title}.mp4`
-  );
+// function downloadVideoURL(ruta) {
+//   const name = ruta.title.replace(/[^a-zA-Z0-9]/g, " ");
 
-  https.get(ruta.url, (response) => {
-    const totalLength = response.headers["content-length"];
+//   const file = fs.createWriteStream(
+//     `C:\\Users\\${process.env.USERNAME}\\Videos\\${name}.mp4`
+//   );
 
-    response.on("data", (chunk) => {
-      file.write(chunk);
-      const downloaded = file.bytesWritten;
-      const progress = Math.round((downloaded / totalLength) * 10000) / 100;
-      console.log(`Downloaded ${progress}%`);
-      webContents.getAllWebContents().forEach((webContent) => {
-        webContent.send("newProgress", progress);
-      });
-    });
+//   https.get(ruta.url, (response) => {
+//     const totalLength = response.headers["content-length"];
 
-    response.on("end", () => {
-      file.end();
-      new Notification({
-        title: "Descarga Completa",
-        body: ruta.title,
-      }).show();
-      console.log("Download finished");
-    });
-  });
-}
+//     response.on("data", (chunk) => {
+//       file.write(chunk);
+//       const downloaded = file.bytesWritten;
+//       const progress = Math.round((downloaded / totalLength) * 10000) / 100;
+//       console.log(`Downloaded ${progress}%`);
+//       webContents.getAllWebContents().forEach((webContent) => {
+//         webContent.send("newProgress", progress);
+//       });
+//     });
+
+//     response.on("end", () => {
+//       file.end();
+//       new Notification({
+//         title: "Descarga Completa",
+//         body: ruta.title,
+//       }).show();
+//       console.log("Download finished");
+//     });
+//   });
+// }
 
 function downloadMusicUrl(ruta) {
   const name = ruta.title.replace(/[^a-zA-Z0-9]/g, " ");
   const file = fs.createWriteStream(
     `C:\\Users\\${process.env.USERNAME}\\Music\\${name}.mp3`
   );
-  console.log(file);
-  console.log("######################3");
-  console.log("DESCARGANDO MUSICA");
   https.get(ruta.url, (response) => {
     const totalLength = response.headers["content-length"];
 
@@ -108,7 +106,7 @@ function downloadMusicUrl(ruta) {
       file.write(chunk);
       const downloaded = file.bytesWritten;
       const progress = Math.round((downloaded / totalLength) * 10000) / 100;
-      console.log(`Downloaded ${progress}%`);
+      // console.log(`Downloaded ${progress}%`);
       webContents.getAllWebContents().forEach((webContent) => {
         webContent.send("newProgress", progress);
       });
@@ -128,6 +126,6 @@ function downloadMusicUrl(ruta) {
 module.exports = {
   musicFolder,
   getInfoMusic,
-  downloadVideoURL,
+  // downloadVideoURL,
   downloadMusicUrl,
 };

@@ -4,7 +4,7 @@ const fs = require("fs");
 const {
   musicFolder,
   getInfoMusic,
-  downloadVideoURL,
+  // downloadVideoURL,
   downloadMusicUrl,
 } = require("./event");
 
@@ -20,19 +20,20 @@ const createWindow = () => {
     },
   });
   // win.loadFile("dist/index.html");
-  win.loadURL("http://localhost:5173");
+  win.loadFile("client/dist/index.html");
+  // win.loadURL("http://localhost:5173");
 };
 
 musicFolder();
 getInfoMusic();
 
-ipcMain.on("downloadVideo", (event, msg) => {
-  new Notification({
-    title: "Descargando Video",
-    body: msg.title,
-  }).show();
-  downloadVideoURL(msg);
-});
+// ipcMain.on("downloadVideo", (event, msg) => {
+//   new Notification({
+//     title: "Descargando Video",
+//     body: msg.title,
+//   }).show();
+//   downloadVideoURL(msg);
+// });
 
 ipcMain.on("downloadMusic", (event, msg) => {
   new Notification({

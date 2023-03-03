@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setMusic } from "../../store/action";
+// import music from "../../assets/music.svg";
 import music from "../../assets/music.svg";
-import volume from "../../assets/volume.svg";
-import volumeM from "../../assets/volumeM.svg";
-import play from "../../assets/play.svg";
-import pause from "../../assets/pause.svg";
-import next from "../../assets/next.svg";
+// import volume from "@/assets/volume.svg";
+// import volumeM from "@/assets/volumeM.svg";
+// import play from "@/assets/play.svg";
+// import pause from "@/assets/pause.svg";
+// import next from "@/assets/next.svg";
 import "./Reproductor.scss";
 
 function Reproductor() {
@@ -74,7 +75,7 @@ function Reproductor() {
           <div className="cd-1-act">
             <div className="volument">
               <div className="v">
-                <img src={volume} width={20} height={20} alt="" />
+                <img src="/volume.svg" width={20} height={20} alt="" />
                 <input
                   onChange={handleChangeVolument}
                   type="range"
@@ -83,7 +84,7 @@ function Reproductor() {
                   defaultValue={100}
                   max={100}
                 />
-                <img src={volumeM} width={20} height={20} alt="" />
+                <img src="/volumeM.svg" width={20} height={20} alt="" />
               </div>
               <div className="shadow"></div>
             </div>
@@ -124,7 +125,7 @@ function Reproductor() {
                 onClick={() => dispatch(setMusic(musicaAct.prevoius))}
               >
                 <img
-                  src={next}
+                  src="/next.svg"
                   width={30}
                   height={30}
                   style={{ transform: "rotateY(180deg)" }}
@@ -134,11 +135,11 @@ function Reproductor() {
 
               {ms ? (
                 <button onClick={playOnPause} className="playAndStop">
-                  <img src={pause} alt="" />
+                  <img src="/pause.svg" alt="" />
                 </button>
               ) : (
                 <button onClick={playOnPause} className="playAndStop">
-                  <img src={play} alt="" />
+                  <img src="/play.svg" alt="" />
                 </button>
               )}
 
@@ -146,7 +147,7 @@ function Reproductor() {
                 disabled={!musicaAct.next}
                 onClick={() => dispatch(setMusic(musicaAct.next))}
               >
-                <img src={next} width={30} height={30} alt="" />
+                <img src="/next.svg" width={30} height={30} alt="" />
               </button>
             </div>
           </div>

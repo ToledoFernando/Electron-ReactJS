@@ -1,10 +1,13 @@
 import { useEffect, useState, useRef } from "react";
-import ButtonPlay from "../../assets/otroPlay.svg";
-import ButtonPause from "../../assets/otroPause.svg";
-import downloadSVG from "../../assets/download.svg";
+// import ButtonPlay from "../../assets/otroPlay.svg";
+// import ButtonPause from "../../assets/otroPause.svg";
+// import downloadSVG from "../../assets/download.svg";
+import { useDispatch } from "react-redux";
 import "./Download.scss";
+import { getHistory } from "../../store/action";
 
 function Download() {
+  const dispatch = useDispatch();
   const [url, setUrl] = useState("");
   const video = useRef();
   const [data, setData] = useState(null);
@@ -12,19 +15,24 @@ function Download() {
   const [timeV, setTimeV] = useState(0);
   const [duration, setDuration] = useState(10);
   const [porcentaje, setPorcentaje] = useState(0);
-
   const [buscando, setBuscando] = useState(false);
+  const [timeVideo, setTimeVideo] = useState(0);
 
   const handleChange = (e) => {
     setUrl(e.target.value);
   };
 
-  const download = () => {
-    send("downloadVideo", data);
-  };
-
   const downloadM = () => {
-    send("downloadMusic", data);
+    let musicas = localStorage.getItem("MusicD");
+    if (musicas != null) {
+      const m = JSON.parse(musicas);
+      m.push(data.title);
+      localStorage.setItem("MusicD", JSON.stringify(m));
+      dispatch(getHistory());
+      return send("downloadMusic", data);
+    }
+    localStorage.setItem("MusicD", JSON.stringify([data.title]));
+    return send("downloadMusic", data);
   };
 
   const getInfoMusic = async (e) => {
@@ -37,12 +45,17 @@ function Download() {
   };
 
   const handleTime = () => {
+    setTimeVideo(Math.floor(video.current.currentTime));
     setTimeV(Math.floor(video.current.currentTime));
   };
 
   const handleTimeChang = (e) => {
     video.current.currentTime = e.target.value;
     video.current.play();
+  };
+
+  const handleChangeVolument = (e) => {
+    video.current.volume = e.target.value * 0.01;
   };
 
   const playPause = () => {
@@ -54,6 +67,13 @@ function Download() {
       setPlay(true);
       video.current.pause();
     }
+  };
+
+  const time = (num) => {
+    const minutos = Math.floor(num / 60);
+    const segundos = Math.floor(num % 60);
+    if (segundos > 9) return `${minutos}:${segundos}`;
+    return `${minutos}:0${segundos}`;
   };
 
   useEffect(() => {
@@ -86,9 +106,14 @@ function Download() {
                 ref={video}
                 width={300}
                 onTimeUpdate={handleTime}
-                height={200}
+                height={210}
               ></video>
+
               <div className="controles">
+                <div className="time">
+                  <label>{time(timeVideo)}</label>
+                  <label>{time(duration)}</label>
+                </div>
                 <input
                   type="range"
                   className="timeVideo"
@@ -100,28 +125,34 @@ function Download() {
                 <div className="botones">
                   {play ? (
                     <button onClick={playPause}>
-                      <img src={ButtonPlay} alt="" />
+                      <img src="/otroPlay.svg" alt="" />
                     </button>
                   ) : (
                     <button onClick={playPause}>
-                      <img src={ButtonPause} alt="" />
+                      <img src="/otroPause.svg" alt="" />
                     </button>
                   )}
-                  <input type="range" name="" id="" />
+                  <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    defaultValue={100}
+                    onChange={handleChangeVolument}
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div className="opciones">
-            <div className="video" onClick={download}>
+            {/* <div className="video" onClick={download}>
               <img src={downloadSVG} alt="" />
               <button>Descargar Video</button>
-            </div>
+            </div> */}
             <div className="musica" onClick={downloadM}>
-              <img src={downloadSVG} alt="" />
+              <img src="/download.svg" alt="" />
               <button>Descargar Musica</button>
             </div>
-            <div>
+            <div className="reset">
               <button onClick={() => setData(null)}>reset</button>
             </div>
           </div>
@@ -131,6 +162,9 @@ function Download() {
           </div>
         </div>
       )}
+      <button className="verHistorial">
+        <a href="#historyDownload">Historial de descarga</a>
+      </button>
     </div>
   );
 }
