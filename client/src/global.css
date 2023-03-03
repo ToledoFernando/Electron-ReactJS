@@ -1,7 +1,7 @@
 @font-face {
   font-family: "myFont";
   font-weight: 300;
-  src: url("/font.ttf") format("truetype");
+  src: url("./font.ttf") format("truetype");
 }
 
 * {

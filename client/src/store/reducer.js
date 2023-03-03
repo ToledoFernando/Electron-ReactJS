@@ -1,4 +1,4 @@
-import { GETMUSICFOLDER, SETMUSIC } from "./action";
+import { GETMUSICFOLDER, SETMUSIC, HD, DELETEMUSICH } from "./action";
 
 const initialState = {
   folders: [],
@@ -6,6 +6,7 @@ const initialState = {
   ant: {},
   act: {},
   sig: {},
+  hd: [],
 };
 
 export function rootReducer(state = initialState, action) {
@@ -24,6 +25,17 @@ export function rootReducer(state = initialState, action) {
         ant: action.payload.prevoius,
         act: action.payload,
         sig: action.payload.next,
+      };
+    case HD:
+      return {
+        ...state,
+        hd: action.payload,
+      };
+    case DELETEMUSICH:
+      localStorage.setItem("MusicD", JSON.stringify(action.payload));
+      return {
+        ...state,
+        hd: JSON.stringify(action.payload),
       };
     default:
       return {

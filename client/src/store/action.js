@@ -2,6 +2,8 @@ import { List } from "../music/Class/List";
 
 export const GETMUSICFOLDER = "GETMUSICFOLDER";
 export const SETMUSIC = "SETMUSIC";
+export const HD = "HD";
+export const DELETEMUSICH = "DELETEMUSICH";
 
 export const getMusicFolder = (ruta) => {
   return async (distpatch) => {
@@ -25,5 +27,30 @@ export const setMusic = (music) => {
   return {
     type: SETMUSIC,
     payload: music,
+  };
+};
+
+export const getHistory = () => {
+  const musicas = localStorage.getItem("MusicD");
+  if (!musicas) {
+    return {
+      type: HD,
+      payload: [],
+    };
+  }
+  return {
+    type: HD,
+    payload: JSON.parse(musicas),
+  };
+};
+
+export const deleteMusicHistory = (name) => {
+  const musica = localStorage.getItem("MusicD");
+  const m = JSON.parse(musica);
+  const result = m.filter((e) => e !== name);
+
+  return {
+    type: DELETEMUSICH,
+    payload: result,
   };
 };

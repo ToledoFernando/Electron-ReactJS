@@ -1,5 +1,7 @@
 .downloadPage {
   height: 100vh;
+  min-width: 100vh;
+  max-height: 100vh;
   width: 100%;
   position: relative;
   display: flex;
@@ -58,6 +60,7 @@
     text-align: center;
     h1 {
       color: #ddd;
+      font-size: 20px;
     }
 
     .video {
@@ -131,6 +134,16 @@
             border: 0;
           }
         }
+        .time {
+          display: flex;
+          justify-content: space-between;
+          padding: 5px;
+
+          label {
+            font-size: 10px;
+            color: #ddd;
+          }
+        }
       }
 
       .timeVideo {
@@ -160,6 +173,7 @@
     margin: 10px auto;
     display: flex;
     justify-content: space-around;
+    position: relative;
 
     div {
       display: flex;
@@ -185,6 +199,10 @@
         background-color: transparent;
       }
     }
+    .reset {
+      position: absolute;
+      right: 30px;
+    }
   }
 
   .videoProgresBar {
@@ -202,6 +220,17 @@
     label {
       color: #ddd;
       font-size: 10px;
+    }
+  }
+  .verHistorial {
+    background-color: var(--red);
+    border: 0;
+    padding: 3px 7px;
+    border-radius: 4px;
+
+    a {
+      color: #ddd;
+      text-decoration: none;
     }
   }
 }
