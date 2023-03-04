@@ -3,7 +3,7 @@
 
 ```js
     npm i // Instalacion de dependencias
-    cd client && npm run dev //inicia el cliente Vite + typescript
+    cd client && npm run dev //inicia el cliente Vite
     npm start // inicia el proyecto de electron (renderiza el cliente Vite)
 ```
 
