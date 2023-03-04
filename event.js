@@ -2,7 +2,7 @@ const { webContents, ipcMain, Notification } = require("electron");
 const path = require("path");
 const ytdl = require("ytdl-core");
 const fs = require("fs");
-// const axios = require("axios");
+const axios = require("axios");
 const https = require("https");
 
 function musicFolder() {
@@ -99,28 +99,61 @@ function downloadMusicUrl(ruta) {
   const file = fs.createWriteStream(
     `C:\\Users\\${process.env.USERNAME}\\Music\\${name}.mp3`
   );
-  https.get(ruta.url, (response) => {
-    const totalLength = response.headers["content-length"];
 
-    response.on("data", (chunk) => {
-      file.write(chunk);
-      const downloaded = file.bytesWritten;
-      const progress = Math.round((downloaded / totalLength) * 10000) / 100;
-      // console.log(`Downloaded ${progress}%`);
-      webContents.getAllWebContents().forEach((webContent) => {
-        webContent.send("newProgress", progress);
+  axios({
+    url: ruta.url,
+    method: "GET",
+    responseType: "stream",
+  })
+    .then((response) => {
+      const totalLength = response.headers["content-length"];
+
+      response.data.pipe(file);
+
+      response.data.on("data", (chunk) => {
+        const downloaded = file.bytesWritten;
+        const progress = Math.round((downloaded / totalLength) * 10000) / 100;
+        webContents.getAllWebContents().forEach((webContent) => {
+          webContent.send("newProgress", progress);
+        });
       });
+
+      response.data.on("end", () => {
+        new Notification({
+          title: "Descarga Completa",
+          body: ruta.title,
+          icon: "ico/icon.png",
+        }).show();
+        console.log("Download finished");
+      });
+    })
+    .catch((error) => {
+      console.log(error);
     });
 
-    response.on("end", () => {
-      file.end();
-      new Notification({
-        title: "Descarga Completa",
-        body: ruta.title,
-      }).show();
-      console.log("Download finished");
-    });
-  });
+  // https.get(ruta.url, (response) => {
+  //   const totalLength = response.headers["content-length"];
+
+  //   response.on("data", (chunk) => {
+  //     file.write(chunk);
+  //     const downloaded = file.bytesWritten;
+  //     const progress = Math.round((downloaded / totalLength) * 10000) / 100;
+  //     // console.log(`Downloaded ${progress}%`);
+  //     webContents.getAllWebContents().forEach((webContent) => {
+  //       webContent.send("newProgress", progress);
+  //     });
+  //   });
+
+  //   response.on("end", () => {
+  //     file.end();
+  //     new Notification({
+  //       title: "Descarga Completa",
+  //       body: ruta.title,
+  //       icon: "ico/icon.png",
+  //     }).show();
+  //     console.log("Download finished");
+  //   });
+  // });
 }
 
 module.exports = {

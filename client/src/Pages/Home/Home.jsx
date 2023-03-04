@@ -44,13 +44,13 @@ function Home() {
             {!musics.head ? null : (
               <div className="ms-act">
                 <div className="musicasList">
+                  <p className="totalMusic">Musicas: {musics.length}</p>
                   <MusicList musicas={musics} />
                 </div>
                 <Reproductor />
               </div>
             )}
           </div>
-          {/* {!musics.head ? null : } */}
         </>
       )}
     </div>

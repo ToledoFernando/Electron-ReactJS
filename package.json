@@ -5,20 +5,23 @@
   "main": "main.js",
   "scripts": {
     "start": "cls && electron .",
-    "build": "electron-builder --win"
+    "build": "electron-builder --win --version=0.0.1"
   },
   "build": {
-    "appId": "com.toledoDev.reproductor",
-    "productName": "Reproductor",
+    "appId": "com.toledoDev.electronplayer",
+    "productName": "ElectronPlayer",
     "directories": {
       "output": "build"
     },
     "files": [
       "**/*"
-    ]
+    ],
+    "win": {
+      "icon": "ico/icon.png"
+    }
   },
   "keywords": [],
-  "author": "",
+  "author": "Toledo Dev",
   "license": "ISC",
   "devDependencies": {
     "electron": "^22.1.0",

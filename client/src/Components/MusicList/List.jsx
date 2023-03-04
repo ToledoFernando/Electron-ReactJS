@@ -7,11 +7,13 @@ function MusicList({ musicas }) {
   let current = musicas.head;
   const lista = [];
 
-  while (current.next !== null) {
+  console.log(current);
+  while (current !== null) {
+    console.log(current.value);
     let musica = current;
     lista.push(
       <button onClick={() => dispatch(setMusic(musica))} key={current.value.id}>
-        {current.value.name}
+        {current.value.name.slice(0, current.value.name.length - 4)}
       </button>
     );
     current = current.next;

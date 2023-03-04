@@ -1,17 +1,18 @@
 import { useEffect, useState, useRef } from "react";
-// import ButtonPlay from "../../assets/otroPlay.svg";
-// import ButtonPause from "../../assets/otroPause.svg";
-// import downloadSVG from "../../assets/download.svg";
+import ButtonPlay from "../../../public/otroPlay.svg";
+import ButtonPause from "../../../public/otroPause.svg";
+import downloadSVG from "../../../public/download.svg";
+import load from "../../../public/load.svg";
 import { useDispatch } from "react-redux";
 import "./Download.scss";
-import { getHistory } from "../../store/action";
+import { getHistory, getMusicFolder } from "../../store/action";
 
 function Download() {
   const dispatch = useDispatch();
   const [url, setUrl] = useState("");
   const video = useRef();
   const [data, setData] = useState(null);
-  const [play, setPlay] = useState(false);
+  const [play, setPlay] = useState(true);
   const [timeV, setTimeV] = useState(0);
   const [duration, setDuration] = useState(10);
   const [porcentaje, setPorcentaje] = useState(0);
@@ -36,6 +37,7 @@ function Download() {
   };
 
   const getInfoMusic = async (e) => {
+    setData(null);
     setBuscando(true);
     e.preventDefault();
     const info = await getMusicInfo(url);
@@ -83,7 +85,7 @@ function Download() {
   }, []);
   return (
     <div id="DownloadPage" className="downloadPage">
-      <button className="volver">
+      <button className="volver" onClick={() => dispatch(getMusicFolder())}>
         <a href="#Home">Volver</a>
       </button>
       <form onSubmit={getInfoMusic}>
@@ -95,7 +97,11 @@ function Download() {
         <input type="submit" value={buscando ? "Buscando..." : "Buscar"} />
       </form>
       {!data ? (
-        <h1 className="sinDatos">Coloque una URL para buscar un video</h1>
+        buscando ? (
+          <img className="load" src={load} width={60} height={60} />
+        ) : (
+          <h1 className="sinDatos">Coloque una URL para buscar un video</h1>
+        )
       ) : (
         <div className="infoFile">
           <div className="title">
@@ -125,11 +131,11 @@ function Download() {
                 <div className="botones">
                   {play ? (
                     <button onClick={playPause}>
-                      <img src="/otroPlay.svg" alt="" />
+                      <img src={ButtonPlay} alt="" />
                     </button>
                   ) : (
                     <button onClick={playPause}>
-                      <img src="/otroPause.svg" alt="" />
+                      <img src={ButtonPause} alt="" />
                     </button>
                   )}
                   <input
@@ -149,7 +155,7 @@ function Download() {
               <button>Descargar Video</button>
             </div> */}
             <div className="musica" onClick={downloadM}>
-              <img src="/download.svg" alt="" />
+              <img src={downloadSVG} alt="" />
               <button>Descargar Musica</button>
             </div>
             <div className="reset">
@@ -158,7 +164,7 @@ function Download() {
           </div>
           <div className="videoProgresBar">
             <div className="progress" style={{ width: `${porcentaje}%` }}></div>
-            <label>{porcentaje < 99.7 ? porcentaje : 100.0}%</label>
+            <label>{porcentaje < 99.45 ? porcentaje : 100.0}%</label>
           </div>
         </div>
       )}
