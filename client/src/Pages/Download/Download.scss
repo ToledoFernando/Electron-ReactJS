@@ -234,3 +234,16 @@
     }
   }
 }
+
+.load {
+  animation: load 1s infinite linear;
+
+  @keyframes load {
+    to {
+      transform: rotateZ(0deg);
+    }
+    from {
+      transform: rotateZ(360deg);
+    }
+  }
+}

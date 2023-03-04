@@ -8,7 +8,6 @@ function Musiccard({ name }) {
   const deleteMusic = (e) => {
     dispatch(deleteMusicHistory(e));
     dispatch(getHistory());
-    // alert("XD");
   };
   return (
     <div className="card">
