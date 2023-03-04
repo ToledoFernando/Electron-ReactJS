@@ -19,3 +19,6 @@
 ![Reproductor](img/rep.png)
 <br>
 ![Descargar](img/dow.png)
+
+
+Link de la [app](https://www.mediafire.com/file/qlwmo4ua3h2wf28/ElectronPlayer_Setup_1.0.0.exe/file)
