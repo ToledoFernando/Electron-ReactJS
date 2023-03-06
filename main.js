@@ -1,8 +1,5 @@
 const { app, BrowserWindow, ipcMain, Notification } = require("electron");
-app.setName("ElectronPlayer");
-
 const path = require("path");
-const fs = require("fs");
 const {
   musicFolder,
   getInfoMusic,
