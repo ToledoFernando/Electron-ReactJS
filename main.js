@@ -22,15 +22,12 @@ const createWindow = () => {
     },
   });
   //Client de produccion
-  // win.loadFile("dist/index.html");
-
-  //Archivos de produccion del client
-  // win.loadFile("client/dist/index.html");
+  win.loadFile("dist/index.html");
 
   //Servidor de desarrollo del client
-  win.loadURL("http://localhost:5173");
+  // win.loadURL("http://localhost:5173");
 
-  win.setMenu(null);
+  // win.setMenu(null);
 };
 
 musicFolder();

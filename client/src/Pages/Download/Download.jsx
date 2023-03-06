@@ -10,6 +10,8 @@ import { getHistory, getMusicFolder } from "../../store/action";
 function Download() {
   const dispatch = useDispatch();
   const [url, setUrl] = useState("");
+  const [urlError, seturlError] = useState(true);
+  const [err, setErr] = useState(false);
   const video = useRef();
   const [data, setData] = useState(null);
   const [play, setPlay] = useState(true);
@@ -20,7 +22,13 @@ function Download() {
   const [timeVideo, setTimeVideo] = useState(0);
 
   const handleChange = (e) => {
-    setUrl(e.target.value);
+    const urlYT = e.target.value.split("watch?v=");
+    console.log(urlYT);
+    if (urlYT[0] === "https://www.youtube.com/" && urlYT[1].length > 4) {
+      setUrl(e.target.value);
+      return seturlError(false);
+    }
+    seturlError(true);
   };
 
   const downloadM = () => {
@@ -37,13 +45,22 @@ function Download() {
   };
 
   const getInfoMusic = async (e) => {
-    setData(null);
-    setBuscando(true);
-    e.preventDefault();
-    const info = await getMusicInfo(url);
-    setData(info);
-    setPorcentaje(0);
-    setBuscando(false);
+    try {
+      setErr(false);
+      setData(null);
+      setBuscando(true);
+      e.preventDefault();
+      const info = await getMusicInfo(url);
+      setData(info);
+      setPorcentaje(0);
+      setBuscando(false);
+    } catch (error) {
+      // console.log(error);
+      // console.log(error.message);
+      // console.log("OCURRIO UN ERROR");
+      setErr(true);
+      setBuscando(false);
+    }
   };
 
   const handleTime = () => {
@@ -94,8 +111,17 @@ function Download() {
           onChange={handleChange}
           placeholder="Ingrese la URL del video"
         />
-        <input type="submit" value={buscando ? "Buscando..." : "Buscar"} />
+        <input
+          type="submit"
+          value={buscando ? "Buscando..." : "Buscar"}
+          disabled={urlError}
+        />
       </form>
+      {err ? (
+        <p className="errorVideo">
+          * OCURRIO UN ERROR, verifique que la URL sea valida *
+        </p>
+      ) : null}
       {!data ? (
         buscando ? (
           <img className="load" src={load} width={60} height={60} />
