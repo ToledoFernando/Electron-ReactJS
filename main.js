@@ -24,7 +24,7 @@ const createWindow = () => {
   //Servidor de desarrollo del client
   // win.loadURL("http://localhost:5173");
 
-  // win.setMenu(null);
+  win.setMenu(null);
 };
 
 musicFolder();
