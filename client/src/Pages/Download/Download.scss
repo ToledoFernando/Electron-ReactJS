@@ -52,6 +52,30 @@
         padding: 10px;
         color: #fff;
         width: 20%;
+
+        &:disabled {
+          background-color: #8d5151;
+          cursor: no-drop;
+        }
+      }
+    }
+  }
+  .errorVideo {
+    color: #c80404;
+    animation: err 0.3s;
+
+    @keyframes err {
+      10%,
+      30%,
+      50%,
+      70% {
+        transform: translateX(3px);
+      }
+      20%,
+      40%,
+      60%,
+      80% {
+        transform: translateX(-3px);
       }
     }
   }
