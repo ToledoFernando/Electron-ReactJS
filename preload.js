@@ -15,6 +15,11 @@ contextBridge.exposeInMainWorld("downloadVideoURL", async (url) => {
   return info;
 });
 
+contextBridge.exposeInMainWorld("getBuffer", async (file, ruta) => {
+  const buffer = await ipcRenderer.invoke("getBuffer", { file, ruta });
+  return buffer;
+});
+
 contextBridge.exposeInMainWorld("send", (event, msg) => {
   return ipcRenderer.send(event, msg);
 });

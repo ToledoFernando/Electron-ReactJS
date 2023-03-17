@@ -45,9 +45,9 @@ function Home() {
               <div className="ms-act">
                 <div className="musicasList">
                   <p className="totalMusic">Musicas: {musics.length}</p>
-                  <MusicList musicas={musics} />
+                  <MusicList musicas={musics} url={url} />
                 </div>
-                <Reproductor />
+                <Reproductor url={url} />
               </div>
             )}
           </div>

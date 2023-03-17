@@ -3,7 +3,6 @@ const path = require("path");
 const ytdl = require("ytdl-core");
 const fs = require("fs");
 const axios = require("axios");
-const https = require("https");
 
 function musicFolder() {
   ipcMain.handle("musicFolder", async (event, url) => {
@@ -37,11 +36,6 @@ function musicFolder() {
       })
     );
 
-    for (let a = 0; a < mp3File.length; a++) {
-      const buff = fs.readFileSync(path.join(directory, mp3File[a].name));
-      mp3File[a].buff = buff;
-    }
-
     return { mp3File, folders };
   });
 }
@@ -62,37 +56,6 @@ function getInfoMusic() {
     }
   });
 }
-
-// function downloadVideoURL(ruta) {
-//   const name = ruta.title.replace(/[^a-zA-Z0-9]/g, " ");
-
-//   const file = fs.createWriteStream(
-//     `C:\\Users\\${process.env.USERNAME}\\Videos\\${name}.mp4`
-//   );
-
-//   https.get(ruta.url, (response) => {
-//     const totalLength = response.headers["content-length"];
-
-//     response.on("data", (chunk) => {
-//       file.write(chunk);
-//       const downloaded = file.bytesWritten;
-//       const progress = Math.round((downloaded / totalLength) * 10000) / 100;
-//       console.log(`Downloaded ${progress}%`);
-//       webContents.getAllWebContents().forEach((webContent) => {
-//         webContent.send("newProgress", progress);
-//       });
-//     });
-
-//     response.on("end", () => {
-//       file.end();
-//       new Notification({
-//         title: "Descarga Completa",
-//         body: ruta.title,
-//       }).show();
-//       console.log("Download finished");
-//     });
-//   });
-// }
 
 function downloadMusicUrl(ruta) {
   const name = ruta.title.replace(/[^a-zA-Z0-9]/g, " ");
@@ -130,35 +93,20 @@ function downloadMusicUrl(ruta) {
     .catch((error) => {
       console.log(error);
     });
+}
 
-  // https.get(ruta.url, (response) => {
-  //   const totalLength = response.headers["content-length"];
-
-  //   response.on("data", (chunk) => {
-  //     file.write(chunk);
-  //     const downloaded = file.bytesWritten;
-  //     const progress = Math.round((downloaded / totalLength) * 10000) / 100;
-  //     // console.log(`Downloaded ${progress}%`);
-  //     webContents.getAllWebContents().forEach((webContent) => {
-  //       webContent.send("newProgress", progress);
-  //     });
-  //   });
-
-  //   response.on("end", () => {
-  //     file.end();
-  //     new Notification({
-  //       title: "Descarga Completa",
-  //       body: ruta.title,
-  //       icon: "ico/icon.png",
-  //     }).show();
-  //     console.log("Download finished");
-  //   });
-  // });
+function getBuffer() {
+  ipcMain.handle("getBuffer", async (env, { file, ruta }) => {
+    const buff = fs.readFileSync(
+      `C:\\Users\\${process.env.USERNAME}\\Music\\${file}`
+    );
+    return buff;
+  });
 }
 
 module.exports = {
   musicFolder,
   getInfoMusic,
-  // downloadVideoURL,
   downloadMusicUrl,
+  getBuffer,
 };
