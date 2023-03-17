@@ -3,16 +3,16 @@ const path = require("path");
 const {
   musicFolder,
   getInfoMusic,
-  // downloadVideoURL,
   downloadMusicUrl,
+  getBuffer,
 } = require("./event");
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    resizable: false,
-    maximizable: false,
+    width: 1200,
+    height: 1000,
+    // resizable: false,
+    // maximizable: false,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname + "/preload.js"),
@@ -28,15 +28,8 @@ const createWindow = () => {
 };
 
 musicFolder();
+getBuffer();
 getInfoMusic();
-
-// ipcMain.on("downloadVideo", (event, msg) => {
-//   new Notification({
-//     title: "Descargando Video",
-//     body: msg.title,
-//   }).show();
-//   downloadVideoURL(msg);
-// });
 
 ipcMain.on("downloadMusic", (event, msg) => {
   new Notification({

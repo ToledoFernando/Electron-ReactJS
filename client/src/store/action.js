@@ -23,10 +23,13 @@ export const getMusicFolder = (ruta) => {
   };
 };
 
-export const setMusic = (music) => {
-  return {
-    type: SETMUSIC,
-    payload: music,
+export const setMusic = (music, ruta) => {
+  return async (dispacth) => {
+    const result = await getBuffer(music.value.name, ruta);
+    return dispacth({
+      type: SETMUSIC,
+      payload: { musica: music, buffer: result },
+    });
   };
 };
 

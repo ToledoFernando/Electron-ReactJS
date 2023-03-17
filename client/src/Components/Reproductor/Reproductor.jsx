@@ -9,7 +9,7 @@ import pause from "../../../public/pause.svg";
 import next from "../../../public/next.svg";
 import "./Reproductor.scss";
 
-function Reproductor() {
+function Reproductor({ url }) {
   const dispatch = useDispatch();
   const musicaAct = useSelector((state) => state.act);
   const [audio, setAudio] = useState(new Audio());
@@ -17,7 +17,7 @@ function Reproductor() {
   const [ms, setMs] = useState(true);
   const musica = useRef();
   const input = useRef();
-  const [duration, setDuration] = useState(5);
+  const [duration, setDuration] = useState(0);
   const [value, setValue] = useState(0);
 
   const handleChangeTime = (e) => {
@@ -51,15 +51,15 @@ function Reproductor() {
   const time = (num) => {
     const minutos = Math.floor(num / 60);
     const segundos = Math.floor(num % 60);
-    if (segundos > 9) return `${minutos}:${segundos}`;
-    return `${minutos}:0${segundos}`;
+    if (segundos > 9) return `${minutos}:${segundos}` || "00:00";
+    return `${minutos}:0${segundos}` || "00:00";
   };
 
   useEffect(() => {
     setP(true);
     setMs(true);
-    if (musicaAct.value) {
-      const blob = new Blob([musicaAct.value.buff], { type: "audio/mp3" });
+    if (musicaAct.musica) {
+      const blob = new Blob([musicaAct.buffer], { type: "audio/mp3" });
       setAudio(URL.createObjectURL(blob));
       setP(false);
     }
@@ -92,7 +92,10 @@ function Reproductor() {
             </div>
 
             <h1 className="title">
-              {musicaAct.value.name.slice(0, musicaAct.value.name.length - 4)}
+              {musicaAct.musica.value.name.slice(
+                0,
+                musicaAct.musica.value.name.length - 4
+              )}
             </h1>
 
             <audio
@@ -107,7 +110,7 @@ function Reproductor() {
           <div className="cd-2-sct">
             <div className="time">
               <label>{time(value)}</label>
-              <label>{time(duration)}</label>
+              <label>{duration ? time(duration) : "00:00"}</label>
             </div>
             <input
               type="range"
@@ -120,8 +123,10 @@ function Reproductor() {
 
             <div className="botones">
               <button
-                disabled={!musicaAct.prevoius}
-                onClick={() => dispatch(setMusic(musicaAct.prevoius))}
+                disabled={!musicaAct.musica.prevoius}
+                onClick={() =>
+                  dispatch(setMusic(musicaAct.musica.prevoius, url))
+                }
               >
                 <img
                   src={next}
@@ -143,8 +148,8 @@ function Reproductor() {
               )}
 
               <button
-                disabled={!musicaAct.next}
-                onClick={() => dispatch(setMusic(musicaAct.next))}
+                disabled={!musicaAct.musica.next}
+                onClick={() => dispatch(setMusic(musicaAct.musica.next, url))}
               >
                 <img src={next} width={30} height={30} alt="" />
               </button>

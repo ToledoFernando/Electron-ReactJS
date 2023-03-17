@@ -3,16 +3,13 @@ import { GETMUSICFOLDER, SETMUSIC, HD, DELETEMUSICH } from "./action";
 const initialState = {
   folders: [],
   musicas: {},
-  ant: {},
   act: {},
-  sig: {},
   hd: [],
 };
 
 export function rootReducer(state = initialState, action) {
   switch (action.type) {
     case GETMUSICFOLDER:
-      console.log(action.payload);
       return {
         ...state,
         musicas: action.payload.list,
@@ -22,9 +19,7 @@ export function rootReducer(state = initialState, action) {
     case SETMUSIC:
       return {
         ...state,
-        ant: action.payload.prevoius,
         act: action.payload,
-        sig: action.payload.next,
       };
     case HD:
       return {
