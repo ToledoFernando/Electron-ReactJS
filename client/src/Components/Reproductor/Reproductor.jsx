@@ -101,7 +101,7 @@ function Reproductor({ url }) {
             <audio
               className="musica"
               ref={musica}
-              onEnded={() => dispatch(setMusic(musicaAct.next))}
+              onEnded={() => dispatch(setMusic(musicaAct.musica.next))}
               autoPlay
               onTimeUpdate={handleChangeTime}
               src={audio}

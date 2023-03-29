@@ -1,6 +1,6 @@
 {
-  "name": "reproductor",
-  "version": "1.0.6",
+  "name": "electronplayer",
+  "version": "1.1.0",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -21,7 +21,7 @@
     }
   },
   "keywords": [],
-  "author": "Toledo Dev",
+  "author": "Toledo_Dev",
   "license": "ISC",
   "devDependencies": {
     "electron": "^22.1.0",
