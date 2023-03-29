@@ -33,10 +33,10 @@ const createWindow = () => {
   minWindows.setMenu(null);
 
   //Client de produccion
-  // minWindows.loadFile("dist/index.html");
+  minWindows.loadFile("dist/index.html");
 
   //Servidor de desarrollo del client
-  minWindows.loadURL("http://localhost:5173");
+  // minWindows.loadURL("http://localhost:5173");
 
   minWindows.on("close", (event) => {
     if (!app.isQuiting) {
